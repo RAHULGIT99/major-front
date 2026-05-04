@@ -1,0 +1,212 @@
+/* ============================================
+   RESULTS PANEL — Tabs, Loading, Empty States
+   ============================================ */
+.results-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ---------- Enhanced Loading State ---------- */
+.loader-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.loader-visual {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.spinner-ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid var(--color-gray-100);
+  border-top-color: var(--color-primary-500);
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner-ring-inner {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid var(--color-gray-100);
+  border-bottom-color: var(--color-primary-300);
+  animation: spin 1.2s linear infinite reverse;
+}
+
+.loader-text-group {
+  text-align: center;
+}
+
+.loading-title {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.loading-text {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  margin: 0;
+}
+
+/* Loading progress steps */
+.loading-steps {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-2);
+}
+
+.loading-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.loading-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-gray-200);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loading-step:nth-child(1) .loading-step-dot { animation-delay: 0s; background: var(--color-primary-400); }
+.loading-step:nth-child(2) .loading-step-dot { animation-delay: 0.3s; }
+.loading-step:nth-child(3) .loading-step-dot { animation-delay: 0.6s; }
+
+/* ---------- Empty State ---------- */
+.empty-state {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.empty-state-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-2xl);
+  background: var(--color-primary-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+  color: var(--color-primary-400);
+}
+
+.empty-state-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.empty-state-text {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  text-align: center;
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+/* ---------- Tabs Header ---------- */
+.tabs-header {
+  display: flex;
+  align-items: center;
+  background: var(--surface-primary);
+  border-bottom: 1px solid var(--border-default);
+  padding: 0 var(--space-4);
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  border-bottom: 2px solid transparent;
+  position: relative;
+  white-space: nowrap;
+  border-radius: 0;
+}
+
+.tab-button:hover {
+  color: var(--text-secondary);
+  background: var(--color-gray-50);
+}
+
+.tab-button.active {
+  color: var(--color-primary-600);
+  border-bottom-color: var(--color-primary-600);
+  background: transparent;
+  font-weight: 600;
+}
+
+.tab-button.active .tab-icon {
+  color: var(--color-primary-500);
+}
+
+.tab-button .tab-icon {
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+}
+
+/* ---------- Tab Content ---------- */
+.tab-content-area {
+  flex: 1;
+  background-color: var(--surface-primary);
+  overflow: hidden;
+  padding: var(--space-4);
+}
+
+.tab-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.placeholder-box {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  border: 2px dashed var(--border-default);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+}

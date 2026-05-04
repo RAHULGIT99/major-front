@@ -1,0 +1,72 @@
+/* ============================================
+   APP LAYOUT
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  display: flex;
+  height: calc(100vh - var(--navbar-height));
+  width: 100%;
+  background-color: var(--surface-secondary);
+  overflow: hidden;
+}
+
+.control-panel {
+  width: 340px;
+  min-width: 300px;
+  max-width: 400px;
+  height: 100%;
+  border-right: 1px solid var(--border-default);
+  background-color: var(--surface-primary);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+  transition: width var(--transition-slow);
+}
+
+.workspace {
+  flex: 1;
+  height: 100%;
+  background-color: var(--surface-secondary);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+  .app-container {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - var(--navbar-height));
+  }
+
+  .control-panel {
+    width: 100% !important;
+    min-width: unset;
+    max-width: unset;
+    height: auto;
+    max-height: 40vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-default);
+  }
+
+  .workspace {
+    width: 100% !important;
+    flex: 1;
+    min-height: 60vh;
+  }
+}
