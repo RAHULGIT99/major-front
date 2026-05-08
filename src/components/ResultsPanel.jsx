@@ -1,53 +1,24 @@
 // components/ResultsPanel.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ChatInterface from './ChatInterface';
 import { MessageSquare, BarChart, Table, Search } from 'lucide-react';
 import './ResultsPanel.css';
 
 const ResultsPanel = ({ isLoading, data, chatHistories, onChatHistoryUpdate }) => {
   const [activeTab, setActiveTab] = useState('chat'); // 'chat' | 'viz' | 'excel'
-  const loadingStages = ['Scraping', 'Indexing', 'Analyzing'];
-  const [loadingStage, setLoadingStage] = useState(0);
-
-  useEffect(() => {
-    if (!isLoading) {
-      setLoadingStage(0);
-      return;
-    }
-
-    const intervalId = setInterval(() => {
-      setLoadingStage((prev) => (prev + 1) % loadingStages.length);
-    }, 2200);
-
-    return () => clearInterval(intervalId);
-  }, [isLoading, loadingStages.length]);
 
 
   // 1. Loading State
   if (isLoading) {
     return (
       <div className="loader-container">
-        <div className="loader-visual">
+        <div className="loader-visual" aria-label="Loading">
           <div className="spinner-ring" />
           <div className="spinner-ring-inner" />
         </div>
-        <div className="loader-text-group">
-          <p className="loading-title">Processing your sources</p>
-          <p className="loading-text">
-            Currently {loadingStages[loadingStage].toLowerCase()}...
-          </p>
-        </div>
-        <div className="loading-steps">
-          {loadingStages.map((stage, index) => (
-            <div
-              key={stage}
-              className={`loading-step ${index === loadingStage ? 'active' : ''}`}
-            >
-              <div className="loading-step-dot" />
-              <span>{stage}</span>
-            </div>
-          ))}
-        </div>
+        <p className="loader-quote">
+          Your URLs, indexing for instant chat, charts, and spreadsheets.
+        </p>
       </div>
     );
   }
