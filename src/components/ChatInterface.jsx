@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Send, Download, Sparkles, CheckCircle2, Copy, Check } from 'lucide-react';
 import './ChatInterface.css';
+import config from '../config/config';
 
 // Convert **bold** markdown to <strong> tags
 const formatText = (text) => {
@@ -53,8 +54,8 @@ const ChatInterface = ({ indexName, summary, messages, onMessagesChange, activeT
 
     try {
       const token = localStorage.getItem('token');
-      const config = { headers: {} };
-      if (token) config.headers['Authorization'] = `Bearer ${token}`;
+      const requestConfig = { headers: {} };
+      if (token) requestConfig.headers['Authorization'] = `Bearer ${token}`;
 
       // Build conversation history from existing messages (last 10, text only)
       const history = messages.slice(-10).map(m => ({
@@ -62,20 +63,20 @@ const ChatInterface = ({ indexName, summary, messages, onMessagesChange, activeT
         text: m.text
       }));
 
-      let endpoint = 'https://major-back-s87n.onrender.com/ask';
+      let endpoint = `${config.api.baseURL}/ask`;
       let payload = {};
       let aiMsg = { id: Date.now() + 1, role: 'ai', text: "" };
 
       // --- LOGIC PER TAB ---
           if (activeTab === 'viz') {
-            endpoint = 'https://major-back-s87n.onrender.com/visuals';
+            endpoint = `${config.api.baseURL}/visuals`;
           payload = {
               query: userMsg.text,
               index: indexName,
               history: history
           };
 
-          const response = await axios.post(endpoint, payload, config);
+          const response = await axios.post(endpoint, payload, requestConfig);
 
           if (response.data.response_type === 'viz') {
             // Visualization was generated
@@ -88,9 +89,9 @@ const ChatInterface = ({ indexName, summary, messages, onMessagesChange, activeT
           }
 
           } else if (activeTab === 'excel') {
-            endpoint = 'https://major-back-s87n.onrender.com/excel';
+            endpoint = `${config.api.baseURL}/excel`;
           payload = { query: userMsg.text, index: indexName, history: history };
-          const response = await axios.post(endpoint, payload, config);
+          const response = await axios.post(endpoint, payload, requestConfig);
 
           if (response.data.response_type === 'excel') {
             // Excel file was generated
@@ -105,9 +106,9 @@ const ChatInterface = ({ indexName, summary, messages, onMessagesChange, activeT
 
           } else {
             // Default: Chat / Summary
-            endpoint = 'https://major-back-s87n.onrender.com/ask';
+            endpoint = `${config.api.baseURL}/ask`;
           payload = { index_name: indexName, question: userMsg.text, history: history };
-          const response = await axios.post(endpoint, payload, config);
+          const response = await axios.post(endpoint, payload, requestConfig);
           aiMsg.text = response.data.answer;
       }
 

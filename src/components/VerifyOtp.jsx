@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AlertCircle, ShieldCheck } from 'lucide-react';
 import './Auth.css';
+import config from '../config/config';
 
 const VerifyOtp = ({ onLoginSuccess }) => {
   const location = useLocation();
@@ -32,7 +33,7 @@ const VerifyOtp = ({ onLoginSuccess }) => {
 
     try {
       // Step 2: Verify with Email, OTP, AND Password (which we carried over)
-      const response = await axios.post('https://major-back-s87n.onrender.com/verify-otp', {
+      const response = await axios.post(`${config.api.baseURL}/verify-otp`, {
         email,
         otp,
         password

@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import './Auth.css';
+import config from '../config/config';
 
 const Login = ({ onLoginSuccess }) => {
   const [identifier, setIdentifier] = useState('');
@@ -19,7 +20,7 @@ const Login = ({ onLoginSuccess }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('https://major-back-s87n.onrender.com/login', {
+      const response = await axios.post(`${config.api.baseURL}/login`, {
         identifier,
         password
       });

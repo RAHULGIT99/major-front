@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Plus, Minus, Search, Trash2 } from 'lucide-react'; 
 import ConfirmationModal from './ConfirmationModal';
 import './UrlInputPanel.css';
+import config from '../config/config';
 
 const UrlInputPanel = ({ urls, setUrls, isLoading, setIsLoading, setAnalysisData, onNewAnalysis }) => {
   const [showModal, setShowModal] = useState(false);
@@ -35,17 +36,17 @@ const UrlInputPanel = ({ urls, setUrls, isLoading, setIsLoading, setAnalysisData
 
     try {
       const token = localStorage.getItem('token');
-      const config = {
+      const requestConfig = {
         headers: {}
       };
       
       if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+        requestConfig.headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await axios.post('https://major-back-s87n.onrender.com/analyze', {
+      const response = await axios.post(`${config.api.baseURL}/analyze`, {
         urls: validUrls
-      }, config);
+      }, requestConfig);
 
       if (response.data && response.data.success) {
         setAnalysisData({

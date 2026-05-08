@@ -1,7 +1,7 @@
 // Application configuration
 const config = {
   api: {
-    baseURL: process.env.REACT_APP_API_BASE_URL || 'https://major-back-s87n.onrender.com',
+    baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000',
     timeout: parseInt(process.env.REACT_APP_API_TIMEOUT) || 30000,
   },
   app: {

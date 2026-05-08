@@ -1,11 +1,26 @@
 // components/ResultsPanel.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatInterface from './ChatInterface';
 import { MessageSquare, BarChart, Table, Search } from 'lucide-react';
 import './ResultsPanel.css';
 
 const ResultsPanel = ({ isLoading, data, chatHistories, onChatHistoryUpdate }) => {
   const [activeTab, setActiveTab] = useState('chat'); // 'chat' | 'viz' | 'excel'
+  const loadingStages = ['Scraping', 'Indexing', 'Analyzing'];
+  const [loadingStage, setLoadingStage] = useState(0);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingStage(0);
+      return;
+    }
+
+    const intervalId = setInterval(() => {
+      setLoadingStage((prev) => (prev + 1) % loadingStages.length);
+    }, 2200);
+
+    return () => clearInterval(intervalId);
+  }, [isLoading, loadingStages.length]);
 
 
   // 1. Loading State
@@ -18,21 +33,20 @@ const ResultsPanel = ({ isLoading, data, chatHistories, onChatHistoryUpdate }) =
         </div>
         <div className="loader-text-group">
           <p className="loading-title">Processing your sources</p>
-          <p className="loading-text">Scraping, indexing &amp; analyzing...</p>
+          <p className="loading-text">
+            Currently {loadingStages[loadingStage].toLowerCase()}...
+          </p>
         </div>
         <div className="loading-steps">
-          <div className="loading-step">
-            <div className="loading-step-dot" />
-            <span>Scraping</span>
-          </div>
-          <div className="loading-step">
-            <div className="loading-step-dot" />
-            <span>Indexing</span>
-          </div>
-          <div className="loading-step">
-            <div className="loading-step-dot" />
-            <span>Analyzing</span>
-          </div>
+          {loadingStages.map((stage, index) => (
+            <div
+              key={stage}
+              className={`loading-step ${index === loadingStage ? 'active' : ''}`}
+            >
+              <div className="loading-step-dot" />
+              <span>{stage}</span>
+            </div>
+          ))}
         </div>
       </div>
     );

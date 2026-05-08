@@ -86,12 +86,18 @@
   height: 8px;
   border-radius: 50%;
   background: var(--color-gray-200);
-  animation: pulse 1.5s ease-in-out infinite;
 }
 
-.loading-step:nth-child(1) .loading-step-dot { animation-delay: 0s; background: var(--color-primary-400); }
-.loading-step:nth-child(2) .loading-step-dot { animation-delay: 0.3s; }
-.loading-step:nth-child(3) .loading-step-dot { animation-delay: 0.6s; }
+.loading-step.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.loading-step.active .loading-step-dot {
+  background: var(--color-primary-500);
+  animation: pulse 1.2s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
 
 /* ---------- Empty State ---------- */
 .empty-state {

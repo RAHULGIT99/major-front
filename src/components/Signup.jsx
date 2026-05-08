@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import './Auth.css';
+import config from '../config/config';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -32,7 +33,7 @@ const Signup = () => {
       // Step 1: Register with Username and Email. 
       // Password is COLLECTED here but sent to backend in Step 2 (Verify) via state transfer,
       // because the backend endpoint for /register only takes { username, email }.
-      await axios.post('https://major-back-s87n.onrender.com/register', {
+      await axios.post(`${config.api.baseURL}/register`, {
         username,
         email
       });
